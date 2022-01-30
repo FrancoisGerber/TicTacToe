@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class BoardComponent implements OnInit {
 
   grid: number[] = [];
+  currentPlayer: string = "X";
 
   constructor() {
     this.grid = Array(3).fill(0).map((x, i) => i);
@@ -15,6 +16,13 @@ export class BoardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  moveMade(event) {
+    if (event == "O")
+      this.currentPlayer = "X";
+    else
+      this.currentPlayer = "O";
   }
 
 }

@@ -1,1 +1,3 @@
-<div class="pieceValue">{{pieceName}}</div>
+<div class="pieceValue" (click)="makeMove()">
+    <div *ngIf="active"> {{symbol}}</div>
+</div>

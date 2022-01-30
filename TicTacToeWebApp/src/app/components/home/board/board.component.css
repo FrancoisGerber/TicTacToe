@@ -1,7 +1,7 @@
 .gameBoard {
     width: 30%;
     padding: 20px;
-    border: black solid 10px;
+    border: white solid 10px;
     border-radius: 40px;
     margin: auto;
     margin-top: 5%;
@@ -20,47 +20,47 @@
 }
 
 .block_0_1 {
-    border-bottom: black solid 10px;
-    border-right: black solid 10px;
+    border-bottom: white solid 10px;
+    border-right: white solid 10px;
 
 }
 
 .block_0_2 {
-    border-bottom: black solid 10px;
-    border-right: black solid 10px;
+    border-bottom: white solid 10px;
+    border-right: white solid 10px;
 
 }
 
 .block_0_3 {
-    border-right: black solid 10px;
+    border-right: white solid 10px;
 
 }
 
 .block_1_1 {
-    border-bottom: black solid 10px;
+    border-bottom: white solid 10px;
 
 }
 
 .block_1_2 {
-    border-bottom: black solid 10px;
+    border-bottom: white solid 10px;
 
 }
 
 .block_1_3 {}
 
 .block_2_1 {
-    border-bottom: black solid 10px;
-    border-left: black solid 10px;
+    border-bottom: white solid 10px;
+    border-left: white solid 10px;
 
 }
 
 .block_2_2 {
-    border-bottom: black solid 10px;
-    border-left: black solid 10px;
+    border-bottom: white solid 10px;
+    border-left: white solid 10px;
 
 }
 
 .block_2_3 {
-    border-left: black solid 10px;
+    border-left: white solid 10px;
 
 }

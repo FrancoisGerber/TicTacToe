@@ -3,9 +3,12 @@
     font-size: 8pc;
     cursor: pointer;
     margin: 10px;
+    height: 130px;
+    width: 170px;
 }
 
 .pieceValue:hover {
 
-    background-color: #dedede;
+    background-color: #b11d1d30;
+    opacity: 0.8;
 }
