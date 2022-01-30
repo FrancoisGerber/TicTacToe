@@ -10,5 +10,5 @@ Frontend - Angular 13
 Docker Containers - add API URL to UI as environment variable.
 
 ## How to RUN:
-UI - ng serve \
-API - dotnet run
+UI - npm install then ng serve \
+API - dotnet restore then dotnet run
