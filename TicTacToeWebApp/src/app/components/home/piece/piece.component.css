@@ -1,0 +1,11 @@
+.pieceValue {
+    font-weight: bolder;
+    font-size: 8pc;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.pieceValue:hover {
+
+    background-color: #dedede;
+}
