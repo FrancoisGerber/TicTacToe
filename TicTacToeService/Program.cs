@@ -1,3 +1,7 @@
+using TicTacToeService.Controllers;
+
+BaseController mainController = new BaseController("mongodb://localhost:27017", "TicTacToe");
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -16,10 +20,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors("AllowMyOrigin");
 
 app.Run();
