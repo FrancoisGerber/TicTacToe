@@ -20,12 +20,6 @@ namespace TicTacToeService.Repositories
             //Get Active Game
             Game activeGame = db.Games.SingleOrDefault(c => c.Id == GameID);
 
-            if (activeGame.PlayedPositions.Count() >= 9)
-            {
-                CompleteGame(activeGame, '-');
-                return activeGame;
-            }
-
             //Get Active Player History
             List<PlayerHistory> playerHistory = ActivePlayer == 'X' ? activeGame.PlayerXHistory : activeGame.PlayerOHistory;
 
@@ -45,6 +39,11 @@ namespace TicTacToeService.Repositories
             else if (CheckVertical(playerHistory))
             {
                 CompleteGame(activeGame, ActivePlayer);
+                return activeGame;
+            }
+            else if (activeGame.PlayedPositions.Count() >= 9)
+            {
+                CompleteGame(activeGame, '-');
                 return activeGame;
             }
 
@@ -117,6 +116,64 @@ namespace TicTacToeService.Repositories
 
             var filter = Builders<Game>.Filter.Eq(x => x.Id, activeGame.Id);
             db.Games.Complete(filter, activeGame);
+        }
+
+        internal void AIMove(string gameID, char activePlayer)
+        {
+            Game activeGame = db.Games.SingleOrDefault(c => c.Id == gameID);
+            List<PlayerHistory> computerHistory = activePlayer == 'X' ? activeGame.PlayerOHistory : activeGame.PlayerXHistory;
+            bool tryAgain = true;
+            while (tryAgain)
+            {
+                int randomMove = new Random().Next(1, 9);
+                if (!activeGame.PlayedPositions.Contains(randomMove))
+                {
+                    //save in db
+                    PlayerHistory move = CalculateAxis(randomMove);
+                    computerHistory.Add(move);
+                    activeGame.PlayedPositions.Add(randomMove);
+
+                    var filter = Builders<Game>.Filter.Eq(x => x.Id, activeGame.Id);
+                    db.Games.Complete(filter, activeGame);
+                    tryAgain = false;
+                }
+            }
+        }
+
+        private PlayerHistory CalculateAxis(int position)
+        {
+            PlayerHistory newMove = new PlayerHistory();
+            string yAxis = "A";
+
+            if (position == 1 || position == 4 || position == 7)
+                yAxis = "A";
+            else if (position == 2 || position == 5 || position == 8)
+                yAxis = "B";
+            else if (position == 3 || position == 6 || position == 9)
+                yAxis = "C";
+
+            switch (position)
+            {
+                case 1:
+                case 2:
+                case 3:
+                    newMove.YAxis = yAxis;
+                    newMove.XAxis = 1;
+                    break;
+                case 4:
+                case 5:
+                case 6:
+                    newMove.YAxis = yAxis;
+                    newMove.XAxis = 2;
+                    break;
+                case 7:
+                case 8:
+                case 9:
+                    newMove.YAxis = yAxis;
+                    newMove.XAxis = 3;
+                    break;
+            }
+            return newMove;
         }
     }
 }

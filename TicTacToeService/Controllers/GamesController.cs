@@ -2,6 +2,8 @@ using DAL.Models;
 using DAL.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using TicTacToeService.Repositories;
 
 namespace TicTacToeService.Controllers;
@@ -10,6 +12,38 @@ namespace TicTacToeService.Controllers;
 [Route("api/[controller]")]
 public class GamesController : BaseController
 {
+    private static event EventHandler<string> PublishEvent;
+
+    [HttpGet]
+    [Route("Subscribe/{id}")]
+    public async Task Subscribe(string id, CancellationToken cancellationToken)
+    {
+        //Setup SSE connection
+        var response = Response;
+        response.Headers.Add("Content-Type", "text/event-stream");
+
+        await response.WriteAsync($"data: {"Connected!"}\r\r");
+        response.Body.Flush();
+
+        //Receive Publish Data from own channel
+        EventHandler<string> onMessage = async (sender, data) =>
+        {
+            //Send to all SSE subscribers
+            data = data.Replace("\r\n", "");
+            await response.WriteAsync($"data: {data}\r\r");
+            response.Body.Flush();
+        };
+
+        PublishEvent += onMessage;
+
+        while (!cancellationToken.IsCancellationRequested)
+        {
+            await Task.Delay(1000);
+        }
+
+        PublishEvent -= onMessage;
+    }
+
     [HttpGet]
     public IEnumerable<Game> Get()
     {
@@ -41,6 +75,10 @@ public class GamesController : BaseController
     public IActionResult Post(Game entity)
     {
         db.Games.Add(entity);
+        if (entity.GameMode == "Online Player")
+        {
+            PublishEvent?.Invoke(this, "reload");
+        }
         return Ok(entity);
     }
 
@@ -71,11 +109,31 @@ public class GamesController : BaseController
 
             GameRules rules = new GameRules(db);
             Game completedGame = rules.CheckGame(playerMove.GameID, playerMove.ActivePlayer);
+
+            if (completedGame.GameMode == "Online Player")
+            {
+                PublishEvent?.Invoke(this, "reload");
+            }
+
+            //PC move
+            if (completedGame.GameMode == "AI" && completedGame.Completed != true)
+            {
+                rules.AIMove(playerMove.GameID, playerMove.ActivePlayer);
+                Game completedGameAI = rules.CheckGame(playerMove.GameID, playerMove.ActivePlayer == 'X' ? 'O' : 'X');
+                return Ok(completedGameAI);
+            }
             return Ok(completedGame);
         }
         catch (System.Exception ex)
         {
             return BadRequest(ex.StackTrace);
         }
+    }
+
+    [HttpGet]
+    [Route("GetPlayerRoom")]
+    public Game GetPlayerRoom(string id)
+    {
+        return db.Games.Find(c => c.GameMode == "Online Player").LastOrDefault();
     }
 }

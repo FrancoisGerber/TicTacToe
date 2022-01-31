@@ -1,8 +1,12 @@
 <div class="mainContent">
     <h1>Tic Tac Toe ONLINE!</h1>
-    <app-board *ngIf="activeGame.id != null" [activeGame]="activeGame"></app-board>
 
-    <br>
     <button class='start-btn' (click)="StartNewGame()">NEW GAME</button>
-    <button class='start-btn'>VS AI</button>
+    <button class='start-btn' (click)="changeGameMode()">VS {{currentGameMode}}</button>
+    <h3 *ngIf="currentGameMode == 'Online Player'">Remember to send a link to your friend!</h3>
+
+    <app-board *ngIf="activeGame != null && activeGame.id != null" [activeGame]="activeGame"
+        (reload)="reloadBoard($event)"></app-board>
+
+
 </div>

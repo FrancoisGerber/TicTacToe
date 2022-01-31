@@ -6,6 +6,7 @@ const routes: Routes = [
   { path: "", redirectTo: "/home", pathMatch: "full" },
   { path: "home", component: HomeComponent },
   { path: "home/:id", component: HomeComponent },
+  { path: "home/:player", component: HomeComponent }
 
 ];
 
