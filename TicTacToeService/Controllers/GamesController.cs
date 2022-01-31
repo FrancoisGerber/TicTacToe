@@ -1,3 +1,4 @@
+using DAL.Interfaces;
 using DAL.Models;
 using DAL.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -107,7 +108,7 @@ public class GamesController : BaseController
             var filter = Builders<Game>.Filter.Eq(x => x.Id, activeGame.Id);
             db.Games.Complete(filter, activeGame);
 
-            GameRules rules = new GameRules(db);
+            IGameRules rules = new GameRules(db);
             Game completedGame = rules.CheckGame(playerMove.GameID, playerMove.ActivePlayer);
 
             if (completedGame.GameMode == "Online Player")

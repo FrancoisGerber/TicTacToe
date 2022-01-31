@@ -118,7 +118,7 @@ namespace TicTacToeService.Repositories
             db.Games.Complete(filter, activeGame);
         }
 
-        internal void AIMove(string gameID, char activePlayer)
+        public void AIMove(string gameID, char activePlayer)
         {
             Game activeGame = db.Games.SingleOrDefault(c => c.Id == gameID);
             List<PlayerHistory> computerHistory = activePlayer == 'X' ? activeGame.PlayerOHistory : activeGame.PlayerXHistory;
