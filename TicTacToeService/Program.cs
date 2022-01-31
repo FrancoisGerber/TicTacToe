@@ -1,13 +1,18 @@
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using TicTacToeService.Controllers;
 
-//i maed dis
-BaseController mainController = new BaseController("mongodb://localhost:27017", "TicTacToe");
-
 var builder = WebApplication.CreateBuilder(args);
+IConfiguration configuration = new ConfigurationBuilder()
+                            .AddJsonFile("appsettings.json")
+                            .Build();
+
+
+//i maed dis
+BaseController mainController = new BaseController(configuration["MongoDB:Server"], configuration["MongoDB:Database"]);
+builder.WebHost.ConfigureKestrel(options => options.ListenAnyIP(5000));
+
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
