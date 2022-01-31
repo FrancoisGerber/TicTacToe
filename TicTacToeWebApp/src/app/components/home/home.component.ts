@@ -11,44 +11,63 @@ import { GameService } from 'src/app/services/game-service';
 export class HomeComponent implements OnInit {
 
   activeGame: Game;
+  gameModes: string[] = ["Offline Player", "AI", "Online Player"];
+  currentGameMode: string = "Offline Player";
 
   constructor(private gameService: GameService, private route: ActivatedRoute, private router: Router) { }
 
   async ngOnInit(mustReload?: boolean) {
     //check if active game
-    
-    let route = this.router.parseUrl(this.router.url).queryParams["id"];
 
-    if (route == null || mustReload) {
+    if (this.currentGameMode != "Online Player") {
+      let route = this.router.parseUrl(this.router.url).queryParams["id"];
 
-      this.activeGame = {
-        createdDate: new Date(),
-        gameMode: "AI", //PLAYER
-        playerXId: "",
-        playerOId: "",
-        playedPositions: [],
-        playerOHistory: [],
-        playerXHistory: [],
-        completed: false
+      if (mustReload) {
+
+        this.activeGame = {
+          createdDate: new Date(),
+          gameMode: this.currentGameMode,
+          playerXId: "",
+          playerOId: "",
+          playedPositions: [],
+          playerOHistory: [],
+          playerXHistory: [],
+          completed: false
+        }
+        this.activeGame = await this.gameService.Post(this.activeGame);
+
+        this.router.navigate([], {
+          relativeTo: this.route,
+          queryParams: {
+            id: this.activeGame.id
+          },
+          skipLocationChange: false
+        });
       }
-      this.activeGame = await this.gameService.Post(this.activeGame);
-
-      this.router.navigate([], {
-        relativeTo: this.route,
-        queryParams: {
-          id: this.activeGame.id
-        },
-        skipLocationChange: false
-      });
-    }
-    else {
-      this.activeGame = await this.gameService.Get(route);
-      
+      else if (route != null) {
+        this.activeGame = null;
+        this.activeGame = await this.gameService.Get(route);
+        this.currentGameMode = this.activeGame.gameMode;
+      }
     }
   }
 
   async StartNewGame() {
     this.ngOnInit(true);
+  }
+
+  changeGameMode() {
+    let currentIndex = this.gameModes.indexOf(this.currentGameMode);
+    if (currentIndex == 2)
+      currentIndex = 0;
+    else
+      currentIndex++;
+
+    this.currentGameMode = this.gameModes[currentIndex];
+  }
+
+  reloadBoard(event) {
+    this.ngOnInit(false);
   }
 
 }

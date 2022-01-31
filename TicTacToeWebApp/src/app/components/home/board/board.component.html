@@ -1,4 +1,4 @@
-<div class="gameBoard">
+<div class="gameBoard" [ngClass]="{pulse: activeGame.completed}">
     <div class="row">
         <div *ngFor="let item of grid" class="block_{{item}}_1 piece">
             <app-piece [pieceName]="item + 1" [playerSymbol]="currentPlayer" [activeGame]="activeGame"

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Game } from 'src/app/models/Game';
 import { GameService } from 'src/app/services/game-service';
 
@@ -12,6 +12,7 @@ export class BoardComponent implements OnInit {
   grid: number[] = [];
   currentPlayer: string = "X";
   @Input() activeGame: Game;
+  @Output() reload = new EventEmitter<any>();
 
   constructor(private gameService: GameService) {
     this.grid = Array(3).fill(0).map((x, i) => i);
@@ -19,7 +20,7 @@ export class BoardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
     let xCount = this.activeGame.playerXHistory.length;
     let oCount = this.activeGame.playerOHistory.length;
     if (xCount > oCount)
@@ -30,7 +31,7 @@ export class BoardComponent implements OnInit {
   }
 
   async moveMade(event) {
-    
+
     this.activeGame.playedPositions.push(event.pieceName);
     this.activeGame = await this.gameService.Put(this.activeGame.id, this.activeGame);
 
@@ -46,6 +47,10 @@ export class BoardComponent implements OnInit {
       this.currentPlayer = "X";
     else
       this.currentPlayer = "O";
+
+    if (this.activeGame.gameMode == "AI")
+      this.reload.emit(true);
+
   }
 
   CalculateAxis(position: number) {

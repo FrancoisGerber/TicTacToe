@@ -71,6 +71,15 @@ public class GamesController : BaseController
 
             GameRules rules = new GameRules(db);
             Game completedGame = rules.CheckGame(playerMove.GameID, playerMove.ActivePlayer);
+
+            //PC move
+            if (completedGame.GameMode == "AI" && completedGame.Completed != true)
+            {
+                rules.AIMove(playerMove.GameID, playerMove.ActivePlayer);
+                Game completedGameAI = rules.CheckGame(playerMove.GameID, playerMove.ActivePlayer == 'X' ? 'O' : 'X');
+                return Ok(completedGameAI);
+            }
+
             return Ok(completedGame);
         }
         catch (System.Exception ex)
