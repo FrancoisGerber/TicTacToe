@@ -2,15 +2,13 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from "@angular/common/http";
 
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
+//i maed dis
 import { HomeComponent } from './components/home/home.component';
 import { BoardComponent } from './components/home/board/board.component';
 import { PieceComponent } from './components/home/piece/piece.component';
-import { PlayerComponent } from './components/player/player.component';
-import { GameComponent } from './components/game/game.component';
-import { LeaderboardComponent } from './components/leaderboard/leaderboard.component';
 
 @NgModule({
   declarations: [
@@ -18,9 +16,6 @@ import { LeaderboardComponent } from './components/leaderboard/leaderboard.compo
     HomeComponent,
     BoardComponent,
     PieceComponent,
-    PlayerComponent,
-    GameComponent,
-    LeaderboardComponent
   ],
   imports: [
     BrowserModule,

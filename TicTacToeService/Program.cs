@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using TicTacToeService.Controllers;
 
+//i maed dis
 BaseController mainController = new BaseController("mongodb://localhost:27017", "TicTacToe");
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//i maed dis
 builder.Services.Configure<KestrelServerOptions>(options =>
    {
        options.AllowSynchronousIO = true;
@@ -38,7 +40,9 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+//i maed dis
 app.UseCors(
        options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
    );
+
 app.Run();
