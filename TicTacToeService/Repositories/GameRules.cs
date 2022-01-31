@@ -20,6 +20,12 @@ namespace TicTacToeService.Repositories
             //Get Active Game
             Game activeGame = db.Games.SingleOrDefault(c => c.Id == GameID);
 
+            if (activeGame.PlayedPositions.Count() >= 9)
+            {
+                CompleteGame(activeGame, '-');
+                return activeGame;
+            }
+
             //Get Active Player History
             List<PlayerHistory> playerHistory = ActivePlayer == 'X' ? activeGame.PlayerXHistory : activeGame.PlayerOHistory;
 
@@ -47,21 +53,11 @@ namespace TicTacToeService.Repositories
 
         private bool CheckDiagonal(List<PlayerHistory> PlayerHistory)
         {
-            //Check for Diagonal = 1 of each number and 1 of each letter
-            bool VertialTrue = false;
-            bool HorizontalTrue = false;
-
-            if (PlayerHistory.Exists(c => c.XAxis == 1))
-                if (PlayerHistory.Exists(c => c.XAxis == 2))
-                    if (PlayerHistory.Exists(c => c.XAxis == 3))
-                        VertialTrue = true;
-
-            if (PlayerHistory.Exists(c => c.YAxis == "A"))
-                if (PlayerHistory.Exists(c => c.YAxis == "B"))
-                    if (PlayerHistory.Exists(c => c.YAxis == "C"))
-                        HorizontalTrue = true;
-
-            return VertialTrue && HorizontalTrue ? true : false;
+            if ((PlayerHistory.Exists(c => c.YAxis == "A" && c.XAxis == 1) && PlayerHistory.Exists(c => c.YAxis == "B" && c.XAxis == 2) && PlayerHistory.Exists(c => c.YAxis == "C" && c.XAxis == 3)) ||
+            (PlayerHistory.Exists(c => c.YAxis == "C" && c.XAxis == 1) && PlayerHistory.Exists(c => c.YAxis == "B" && c.XAxis == 2) && PlayerHistory.Exists(c => c.YAxis == "A" && c.XAxis == 3)))
+                return true;
+            else
+                return false;
         }
 
         private bool CheckHorizontal(List<PlayerHistory> PlayerHistory)
@@ -78,13 +74,39 @@ namespace TicTacToeService.Repositories
 
         private bool CheckVertical(List<PlayerHistory> PlayerHistory)
         {
-            //Check for Vertical = 1 of each number
+            bool numberTrue = false;
+            bool letterTrue = false;
+
+            //Check for Vertical = 1 of each number and same letter
             if (PlayerHistory.Exists(c => c.XAxis == 1))
                 if (PlayerHistory.Exists(c => c.XAxis == 2))
                     if (PlayerHistory.Exists(c => c.XAxis == 3))
-                        return true;
+                        numberTrue = true;
 
-            return false;
+            if (numberTrue)
+            {
+                var allPositions = PlayerHistory.Where(c => c.XAxis == 1).ToList();
+                foreach (var item in allPositions)
+                {
+                    var y1 = PlayerHistory.Exists(c => c.XAxis == 1 && c.YAxis == item.YAxis) ? PlayerHistory.FirstOrDefault(c => c.XAxis == 1 && c.YAxis == item.YAxis).YAxis : null;
+                    var y2 = PlayerHistory.Exists(c => c.XAxis == 2 && c.YAxis == item.YAxis) ? PlayerHistory.FirstOrDefault(c => c.XAxis == 2 && c.YAxis == item.YAxis).YAxis : null;
+                    var y3 = PlayerHistory.Exists(c => c.XAxis == 3 && c.YAxis == item.YAxis) ? PlayerHistory.FirstOrDefault(c => c.XAxis == 3 && c.YAxis == item.YAxis).YAxis : null;
+
+                    if (y1 == null)
+                        break;
+                    if (y2 == null)
+                        break;
+                    if (y3 == null)
+                        break;
+
+                    if (y1 == y2 && y2 == y3 && y3 == y1)
+                        letterTrue = true;
+                }
+            }
+
+
+            return numberTrue && letterTrue ? true : false;
+
         }
 
         private void CompleteGame(Game activeGame, char ActivePlayer)

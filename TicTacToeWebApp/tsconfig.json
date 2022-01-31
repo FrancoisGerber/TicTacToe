@@ -21,7 +21,10 @@
     "lib": [
       "es2020",
       "dom"
-    ]
+    ],
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
@@ -34,5 +37,6 @@
     "./node_modules",
     "./node_modules/*",
     "./node_modules/@types/node/index.d.ts",
-  ]
+  ],
+  
 }

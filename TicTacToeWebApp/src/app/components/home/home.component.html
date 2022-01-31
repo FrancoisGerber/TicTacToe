@@ -1,4 +1,8 @@
 <div class="mainContent">
     <h1>Tic Tac Toe ONLINE!</h1>
-    <app-board></app-board>
+    <app-board *ngIf="activeGame.id != null" [activeGame]="activeGame"></app-board>
+
+    <br>
+    <button class='start-btn' (click)="StartNewGame()">NEW GAME</button>
+    <button class='start-btn'>VS AI</button>
 </div>
