@@ -1,6 +1,18 @@
+
+
+
+.row {
+    display: flex;
+}
+
+.piece {
+    width: 33%;
+    height: 33%;
+    text-align: center;
+}
+
 .gameBoard {
-    width: 30%;
-    padding: 20px;
+    padding: 10px;
     border: white solid 10px;
     border-radius: 40px;
     margin: auto;
@@ -8,16 +20,66 @@
 }
 
 
-.row {
-    display: flex;
+@media (min-width:320px) {
+
+    /* smartphones, iPhone, portrait 480x320 phones */
+    .gameBoard {
+        width: 80%;
+    }
+    
 }
 
+@media (min-width:481px) {
 
-.piece {
-    width: 33%;
-    height: 33%;
-    text-align: center;
+    /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+    .gameBoard {
+        width: 80%;
+    }
+    
+    
 }
+
+@media (min-width:641px) {
+
+    /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+    .gameBoard {
+        width: 80%;
+    }
+    
+
+}
+
+@media (min-width:961px) {
+
+    /* tablet, landscape iPad, lo-res laptops ands desktops */
+    .gameBoard {
+        width: 60%;
+      
+    }
+    
+    
+}
+
+@media (min-width:1025px) {
+
+    /* big landscape tablets, laptops, and desktops */
+    .gameBoard {
+        width: 50%;
+      
+    }
+    
+}
+
+@media (min-width:1281px) {
+
+    /* hi-res laptops and desktops */
+    .gameBoard {
+        width: 30%;
+      
+    }
+    
+}
+
 
 .block_0_1 {
     border-bottom: white solid 10px;

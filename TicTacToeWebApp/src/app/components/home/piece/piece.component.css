@@ -1,14 +1,78 @@
 .pieceValue {
     font-weight: bolder;
-    font-size: 8pc;
     cursor: pointer;
     margin: 10px;
-    height: 130px;
-    width: 170px;
 }
 
 .pieceValue:hover {
 
     background-color: #b11d1d30;
     opacity: 0.8;
+}
+
+
+@media (min-width:320px) {
+
+    /* smartphones, iPhone, portrait 480x320 phones */
+    .pieceValue {
+        height: 80px;
+        width: 70px;
+        font-size: 5pc;
+    }
+
+}
+
+@media (min-width:481px) {
+
+    /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+    .pieceValue {
+        height: 80px;
+        width: 60px;
+        font-size: 5pc;
+    }
+
+}
+
+@media (min-width:641px) {
+
+    /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+    .pieceValue {
+        height: 140px;
+        width: 175px;
+        font-size: 8pc;
+    }
+
+
+}
+
+@media (min-width:961px) {
+
+    /* tablet, landscape iPad, lo-res laptops ands desktops */
+    .pieceValue {
+        height: 100px;
+        width: 170px;
+        font-size: 5pc;
+    }
+
+}
+
+@media (min-width:1025px) {
+
+    /* big landscape tablets, laptops, and desktops */
+    .pieceValue {
+        height: 130px;
+        width: 170px;
+        font-size: 8pc;
+    }
+}
+
+@media (min-width:1281px) {
+
+    /* hi-res laptops and desktops */
+    .pieceValue {
+        height: 130px;
+        width: 170px;
+        font-size: 8pc;
+    }
+
 }

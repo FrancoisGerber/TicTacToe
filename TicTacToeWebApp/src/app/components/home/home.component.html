@@ -3,6 +3,7 @@
 
     <button class='start-btn' (click)="StartNewGame()">NEW GAME</button>
     <button class='start-btn' (click)="changeGameMode()">VS {{currentGameMode}}</button>
+    <h3 *ngIf="currentGameMode == 'Online Player'">Remember to send a link to your friend!</h3>
 
     <app-board *ngIf="activeGame != null && activeGame.id != null" [activeGame]="activeGame"
         (reload)="reloadBoard($event)"></app-board>
