@@ -34,7 +34,7 @@ public class GamesController : BaseController
 
         var filter = Builders<Game>.Filter.Eq(x => x.Id, id);
         db.Games.Complete(filter, entity);
-        return Ok();
+        return Ok(entity);
     }
 
     [HttpPost]

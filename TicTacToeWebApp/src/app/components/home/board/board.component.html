@@ -1,19 +1,28 @@
 <div class="gameBoard">
     <div class="row">
         <div *ngFor="let item of grid" class="block_{{item}}_1 piece">
-            <app-piece [pieceName]="item + 1" [playerSymbol]="currentPlayer" (pieceClicked)="moveMade($event)"></app-piece>
+            <app-piece [pieceName]="item + 1" [playerSymbol]="currentPlayer" [activeGame]="activeGame"
+                (pieceClicked)="moveMade($event)">
+            </app-piece>
         </div>
     </div>
 
     <div class="row">
         <div *ngFor="let item of grid" class="block_{{item}}_2 piece">
-            <app-piece [pieceName]="item + 1 * 4" [playerSymbol]="currentPlayer" (pieceClicked)="moveMade($event)"></app-piece>
+            <app-piece [pieceName]="item + 1 * 4" [playerSymbol]="currentPlayer" [activeGame]="activeGame"
+                (pieceClicked)="moveMade($event)">
+            </app-piece>
         </div>
     </div>
 
     <div class="row">
         <div *ngFor="let item of grid" class="block_{{item}}_3 piece">
-            <app-piece [pieceName]="item + 1 * 7" [playerSymbol]="currentPlayer" (pieceClicked)="moveMade($event)"></app-piece>
+            <app-piece [pieceName]="item + 1 * 7" [playerSymbol]="currentPlayer" [activeGame]="activeGame"
+                (pieceClicked)="moveMade($event)">
+            </app-piece>
         </div>
     </div>
 </div>
+
+<h1 *ngIf="activeGame.completed && activeGame.winner != '-'">Winner: {{activeGame.winner}}</h1>
+<h1 *ngIf="activeGame.completed && activeGame.winner == '-'">Tie!</h1>
