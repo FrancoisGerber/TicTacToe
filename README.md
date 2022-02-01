@@ -19,4 +19,4 @@ Docker Containers:
 - Frontend - RUN docker run --publish 80:80 --detach --name tictactoewebapp tictactoewebapp:latest
 
 ## Live Demo
-http://ec2-3-19-241-191.us-east-2.compute.amazonaws.com/
+http://ec2-13-244-224-18.af-south-1.compute.amazonaws.com/
