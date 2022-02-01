@@ -1,3 +1,3 @@
 {
-    "BaseURL": "http://localhost:5000/api/"
+    "BaseURL": "http://ec2-3-19-241-191.us-east-2.compute.amazonaws.com:5000/api/"
 }
