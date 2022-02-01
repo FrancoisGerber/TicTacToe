@@ -17,3 +17,6 @@ Docker Containers:
 - Frontend - add backend URL to config.json file 
 - Frontend - RUN docker build -t tictactoewebapp . 
 - Frontend - RUN docker run --publish 80:80 --detach --name tictactoewebapp tictactoewebapp:latest
+
+## Live Demo
+http://ec2-3-19-241-191.us-east-2.compute.amazonaws.com/
