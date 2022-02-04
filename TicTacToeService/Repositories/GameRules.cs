@@ -11,7 +11,7 @@ namespace TicTacToeService.Repositories
         private GameDataRepository db;
 
         public GameRules(GameDataRepository Database)
-        {
+        {   
             db = Database;
         }
 
