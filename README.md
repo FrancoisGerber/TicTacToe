@@ -1,5 +1,5 @@
 # TicTacToe
-A simple Tic Tac Toe Online Web Implementation with vs AI or vs Player modes.
+An over engineered Tic Tac Toe Online Web Implementation with vs AI or vs Player modes.
 
 ## Tech Used:
 Database - MongoDB \
